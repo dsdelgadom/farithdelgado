@@ -8,21 +8,27 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background: url('https://www.todofondos.net/wp-content/uploads/1920x1080-Pizarra-Blackboard-004.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
         }
         .container {
             display: grid;
             grid-template-columns: repeat(10, 1fr);
-            gap: 5px;
-            width: 300px;
+            gap: 10px;
+            max-width: 80%;
             margin: auto;
+            padding: 20px;
         }
         .number {
-            padding: 15px;
-            font-size: 20px;
+            padding: 20px;
+            font-size: 24px;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
         .even { background-color: green; color: white; }
         .odd { background-color: yellow; color: black; }
@@ -54,12 +60,12 @@
         function speakNumber(number) {
             let msg = new SpeechSynthesisUtterance();
             msg.lang = "es-ES"; 
-            msg.rate = 0.8;  // 🔹 Velocidad reducida (1 es normal, 0.8 es más lento)
+            msg.rate = 0.9;  // Velocidad más natural
 
             if (number % 2 === 0) {
-                msg.text = `Este es el número ${number} y es un número par.`;
+                msg.text = `Este es el número ${number}, y es un número par.`;
             } else {
-                msg.text = `Este es el número ${number} y es un número impar.`;
+                msg.text = `Este es el número ${number}, y es un número impar.`;
             }
 
             window.speechSynthesis.speak(msg);
