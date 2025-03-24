@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Números Pares e Impares Tablero Interactivo - Farith Delgado</title>
+    <title>Números Pares e Impares - Interactivo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@
         }
         
         .title-container {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             padding: 15px;
             width: 100%;
             position: relative;
@@ -24,52 +24,66 @@
         }
         
         h1 {
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 24px;
             margin: 0;
             color: white;
         }
 
         .container {
             display: grid;
-            grid-template-columns: repeat(10, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
             gap: 10px;
-            max-width: 80%;
+            max-width: 90%;
             margin: auto;
             padding: 20px;
         }
 
         .number {
-            padding: 20px;
-            font-size: 24px;
+            padding: 15px;
+            font-size: 20px;
             font-weight: bold;
             border-radius: 10px;
             cursor: pointer;
             text-align: center;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
         }
         
-        .even { background-color: green; color: white; }
-        .odd { background-color: yellow; color: black; }
+        .even { background-color: #28a745; color: white; }
+        .odd { background-color: #ffc107; color: black; }
 
-        /* Animación de parpadeo */
-        @keyframes blink {
-            0% { transform: scale(1); opacity: 1; }
-            25% { transform: scale(1.3); opacity: 0.5; }
-            50% { transform: scale(1); opacity: 1; }
-            75% { transform: scale(1.3); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
+        /* Efecto hover */
+        .number:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
         }
-        
-        .blink {
-            animation: blink 0.6s ease-in-out;
+
+        /* Animación de clic */
+        .clicked {
+            animation: blink 0.4s ease-in-out;
+        }
+
+        @keyframes blink {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+                gap: 5px;
+            }
+            .number {
+                padding: 10px;
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="title-container">
-        <h1>Números Pares e Impares Tablero Interactivo - Dr. Farith Delgado</h1>
+        <h1>Números Pares e Impares - Interactivo</h1>
     </div>
     
     <div class="container" id="numbers"></div>
@@ -93,15 +107,7 @@
         function speakNumber(number) {
             let msg = new SpeechSynthesisUtterance();
             msg.lang = "es-ES";
-            msg.rate = 0.9; // Velocidad más natural
-
-            // Buscar voz femenina en español
-            let voices = window.speechSynthesis.getVoices();
-            let femaleVoice = voices.find(voice => voice.lang === "es-ES" && voice.name.toLowerCase().includes("mujer"));
-
-            if (femaleVoice) {
-                msg.voice = femaleVoice;
-            }
+            msg.rate = 0.9;
 
             msg.text = number % 2 === 0 
                 ? `Este es el número ${number}, y es un número par.` 
@@ -111,17 +117,11 @@
         }
 
         function animateNumber(element) {
-            element.classList.add("blink");
+            element.classList.add("clicked");
             setTimeout(() => {
-                element.classList.remove("blink");
-            }, 600);
+                element.classList.remove("clicked");
+            }, 400);
         }
-
-        // Asegurar que las voces se carguen antes de asignar una
-        window.speechSynthesis.onvoiceschanged = () => {
-            let voices = window.speechSynthesis.getVoices();
-            console.log("Voces disponibles:", voices);
-        };
     </script>
 </body>
 </html>
