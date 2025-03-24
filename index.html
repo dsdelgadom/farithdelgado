@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendiendo los Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            width: 300px;
+            margin: auto;
+        }
+        .number {
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .even { background-color: green; color: white; }
+        .odd { background-color: yellow; color: black; }
+        .bounce {
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Aprendamos los números del 1 al 100</h1>
+    <div class="container" id="numbers"></div>
+
+    <script>
+        const container = document.getElementById("numbers");
+
+        for (let i = 1; i <= 100; i++) {
+            let numElement = document.createElement("div");
+            numElement.className = "number " + (i % 2 === 0 ? "even" : "odd");
+            numElement.innerText = i;
+
+            numElement.onclick = () => {
+                speakNumber(i);
+                animateNumber(numElement);
+            };
+
+            container.appendChild(numElement);
+        }
+
+        function speakNumber(number) {
+            let msg = new SpeechSynthesisUtterance();
+            msg.lang = "es-ES"; 
+            msg.rate = 0.8;  // 🔹 Velocidad reducida (1 es normal, 0.8 es más lento)
+
+            if (number % 2 === 0) {
+                msg.text = `Este es el número ${number} y es un número par.`;
+            } else {
+                msg.text = `Este es el número ${number} y es un número impar.`;
+            }
+
+            window.speechSynthesis.speak(msg);
+        }
+
+        function animateNumber(element) {
+            element.classList.add("bounce");
+            setTimeout(() => {
+                element.classList.remove("bounce");
+            }, 200);
+        }
+    </script>
+</body>
+</html>
